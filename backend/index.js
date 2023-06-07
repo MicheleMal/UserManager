@@ -1,4 +1,3 @@
-//FIXME: Sistemare tutti i return
 import epxress from "express"
 import cors from "cors"
 import "dotenv/config"
@@ -10,7 +9,7 @@ const app = epxress()
 app.use(epxress.json())
 app.use(cors())
 
-app.use("/manager", usersRoutes)
+app.use("/manager/users", usersRoutes)
 app.use("/auth", authRoutes)
 
 const PORT = process.env.PORT || 5001

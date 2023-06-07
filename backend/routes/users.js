@@ -9,7 +9,7 @@ import { authenticateToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/users", getAllUsers);
+router.get("/all", getAllUsers);
 router.get("/user", authenticateToken, getUserById);
 
 router.patch("/modify", authenticateToken, modiifyUser);
