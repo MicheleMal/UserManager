@@ -25,7 +25,7 @@ export const getAllUsers = (req, res) => {
 
 // Get information about a user by a specific id
 export const getUserById = (req, res) => {
-    const { id } = req.params;
+    const { id } = req.user;
 
     const query = `SELECT * FROM users WHERE id=${id}`;
 
@@ -51,7 +51,7 @@ export const getUserById = (req, res) => {
 
 // Change user information
 export const modiifyUser = (req, res) => {
-    const { id } = req.params;
+    const { id } = req.user;
     const data = req.body;
 
     const query = `UPDATE users SET ? WHERE id=${id}`;
@@ -78,11 +78,11 @@ export const modiifyUser = (req, res) => {
 
 // Delete user
 export const deleteUser = (req, res) => {
-    const { id } = req.params;
+    const { id } = req.user;
 
     const query = `DELETE FROM users WHERE id=${id}`;
 
-    connection.query(query, (error, result)=>{
+    connection.query(query, (error, result) => {
         if (error)
             return res
                 .status(400)
@@ -99,5 +99,5 @@ export const deleteUser = (req, res) => {
                 .status(400)
                 .json({ message: error.message, data: result, check: false });
         }
-    })
+    });
 };

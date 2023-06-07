@@ -1,12 +1,18 @@
 import express from "express";
-import { deleteUser, getAllUsers, getUserById, modiifyUser } from "../controllers/users.js";
+import {
+    deleteUser,
+    getAllUsers,
+    getUserById,
+    modiifyUser,
+} from "../controllers/users.js";
+import { authenticateToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/users", getAllUsers)
-router.get("/user/:id", getUserById);
+router.get("/users", getAllUsers);
+router.get("/user", authenticateToken, getUserById);
 
-router.patch("/modify/:id", modiifyUser)
+router.patch("/modify", authenticateToken, modiifyUser);
 
-router.delete("/delete/:id", deleteUser)
+router.delete("/delete", authenticateToken, deleteUser);
 export default router;
