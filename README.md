@@ -34,12 +34,12 @@ User Manager is an application for user management, created using Node.js and My
 * The APIs will be accessible at: http://localhost:3000
 
 ### API Endpoints
-* POST auth/register: Register a new user with provided details
+* POST auth/signup: Register a new user with provided details
 * POST auth/login: Perform login and return JWT Token for authentication
-* GET manager/user/profile: Get the information of the logged-in user (requires authentication)
-* PUT manager/user/profile: Modify the account information of the logged-in user (requires authentication)
-* DELETE manager/user/profile: Delete the account of the logged-in user (requires authentication)
-* GET manager/users: Retrieve all registered users (__COMING SOON__: requires administrator authorization)
+* GET manager/users/profile: Get the information of the logged-in user (requires authentication)
+* PATCH manager/users/modify: Modify the account information of the logged-in user (requires authentication)
+* DELETE manager/users/delete: Delete the account of the logged-in user (requires authentication)
+* GET manager/users/all: Retrieve all registered users (__COMING SOON__: requires administrator authorization)
 
 ***
 
