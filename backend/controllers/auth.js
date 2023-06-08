@@ -15,18 +15,18 @@ export const registerUser = async (req, res) => {
         if (error)
             return res
                 .status(400)
-                .json({ message: error.message, data: result, check: false });
+                .json({ message: error.message, data: [], check: false });
 
         try {
             return res.status(400).json({
-                message: "Registrazione effettuata",
+                message: "Registration done",
                 data: result,
                 check: true,
             });
         } catch (error) {
             return res
                 .status(400)
-                .json({ message: error.message, data: result, check: false });
+                .json({ message: error.message, data: [], check: false });
         }
     });
 };
@@ -41,13 +41,13 @@ export const loginUser = (req, res) => {
         if (error)
             return res
                 .status(400)
-                .json({ message: error.message, data: result, check: false });
+                .json({ message: error.message, data: [], check: false });
 
         try {
             if (result.length == 0) {
                 return res.status(400).json({
-                    message: "Email o password errati",
-                    data: result,
+                    message: "Incorrect email or password",
+                    data: [],
                     check: false,
                 });
             }
@@ -57,13 +57,13 @@ export const loginUser = (req, res) => {
                     id: result[0].id
                 },process.env.JWT_SECRET)
                 
-                return res.status(200).json({message:"Login effettuato", data:token, check:true})
+                return res.status(200).json({message:"Login in done", data:token, check:true})
             }
 
         } catch (error) {
             return res
                 .status(400)
-                .json({ message: error.message, data: result, check: false });
+                .json({ message: error.message, data: [], check: false });
         }
     });
 };

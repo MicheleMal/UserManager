@@ -9,16 +9,16 @@ export const getAllUsers = (req, res) => {
         if (error)
             return res
                 .status(400)
-                .json({ message: error.message, data: result, check: false });
+                .json({ message: error.message, data: [], check: false });
 
         try {
             return res
                 .status(200)
-                .json({ message: "Utenti", data: result, check: true });
+                .json({ message: "Users", data: result, check: true });
         } catch (error) {
             return res
                 .status(400)
-                .json({ message: error.message, data: result, check: false });
+                .json({ message: error.message, data: [], check: false });
         }
     });
 };
@@ -33,18 +33,18 @@ export const getUserById = (req, res) => {
         if (error)
             return res
                 .status(400)
-                .json({ message: error.message, data: result, check: false });
+                .json({ message: error.message, data: [], check: false });
 
         try {
             return res.status(200).json({
-                message: "Informazioni utente",
+                message: "User information",
                 data: result,
                 check: true,
             });
         } catch (error) {
             return res
                 .status(400)
-                .json({ message: error.message, data: result, check: false });
+                .json({ message: error.message, data: [], check: false });
         }
     });
 };
@@ -60,18 +60,18 @@ export const modiifyUser = (req, res) => {
         if (error)
             return res
                 .status(400)
-                .json({ message: error.message, data: result, check: false });
+                .json({ message: error.message, data: [], check: false });
 
         try {
             return res.status(200).json({
-                message: "Utente modificato con successo",
+                message: "User changed successfully",
                 data: result,
                 check: true,
             });
         } catch (error) {
             return res
                 .status(400)
-                .json({ message: error.message, data: result, check: false });
+                .json({ message: error.message, data: [], check: false });
         }
     });
 };
@@ -86,18 +86,18 @@ export const deleteUser = (req, res) => {
         if (error)
             return res
                 .status(400)
-                .json({ message: error.message, data: result, check: false });
+                .json({ message: error.message, data: [], check: false });
 
         try {
             return res.status(200).json({
-                message: "Utente eliminato con successo",
+                message: "User successfully deleted",
                 data: result,
                 check: true,
             });
         } catch (error) {
             return res
                 .status(400)
-                .json({ message: error.message, data: result, check: false });
+                .json({ message: error.message, data: [], check: false });
         }
     });
 };
