@@ -18,7 +18,7 @@ export const registerUser = async (req, res) => {
                 .json({ message: error.message, data: [], check: false });
 
         try {
-            return res.status(400).json({
+            return res.status(200).json({
                 message: "Registration done",
                 data: result,
                 check: true,
