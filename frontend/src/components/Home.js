@@ -1,7 +1,7 @@
 export default function Home() {
-    return (
-        <h1>
-            HOME
-        </h1>
+    return(
+        <div className="container-fluid">
+            <h1>Home</h1>
+        </div>
     )
 }

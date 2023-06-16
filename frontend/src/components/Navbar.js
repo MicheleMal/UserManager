@@ -1,43 +1,42 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Link, Routes, Route, NavLink } from "react-router-dom"
-import Register from './Register';
-import Home from './Home';
+import { NavLink } from "react-router-dom"
+import { useCookies } from "react-cookie"
 
 export default function Navbar() {
+
+    const [cookies] = useCookies(['jwtToken'])
+
     return (
-        <Router>
-            <>
-                <nav className="navbar navbar-expand-lg bg-body-tertiary">
-                    <div className="container-fluid">
-                        {/* <a className="navbar-brand"> Navbar</a> */}
-                        <Link className='navbar-brand' to="/" aria-current="page">UserManager</Link>
-                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li className="nav-item">
-                                    {/* <a className="nav-link active" aria-current="page">Home</a> */}
-                                    <NavLink className='nav-link' to="/" aria-current="page">Home</NavLink>
-                                    {/* <Link className='nav-link' to="/">Home</Link> */}
-                                </li>
-                                <li className="nav-item">
-                                    {/* <a className="nav-link">Sign up</a> */}
-                                    {/* <Link className='nav-link' to="/signup">Sign up</Link> */}
-                                    <NavLink className='nav-link' to="/signup" aria-current="page">Signup</NavLink>
-                                </li>
-                            </ul>
-                        </div>
+        <>
+            <nav className="navbar navbar-expand-lg bg-body-tertiary">
+                <div className="container-fluid">
+                    <NavLink to="/" className="navbar-brand">UserManager</NavLink>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarNav">
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <NavLink to="/" className="nav-link">Home</NavLink>
+                            </li>
+                            {/* <li className="nav-item">
+                                <NavLink to="/signup" className="nav-link">Signup</NavLink>
+                            </li> */}
+
+                            {
+                                cookies.jwtToken ? (
+                                    <li className="nav-item">
+                                        <NavLink to="/dashboard" className="nav-link">Dashboard</NavLink>
+                                    </li>
+                                ) : (
+                                    <li className="nav-item">
+                                        <NavLink to="/signup" className="nav-link">Signup</NavLink>
+                                    </li>
+                                )
+                            }
+                        </ul>
                     </div>
-                </nav>
-
-                <Routes>
-                    <Route exact path='/' Component={Home}/>
-                    <Route exact path='/signup' Component={Register} />
-                </Routes>
-
-            </>
-        </Router>
-
+                </div>
+            </nav>
+        </>
     )
 }

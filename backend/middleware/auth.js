@@ -14,7 +14,7 @@ export const authenticateToken = (req, res, next) => {
         if (error) {
             return res
                 .status(400)
-                .json({ message: error.message, data: result, check: false });
+                .json({ message: error.message, data: [], check: false });
         }
 
         req.user = user;
