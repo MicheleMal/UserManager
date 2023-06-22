@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
-import {useCookies} from "react-cookie"
+import { useCookies } from "react-cookie"
 import { Navigate } from "react-router-dom"
 
 export default function Login() {
@@ -10,7 +10,7 @@ export default function Login() {
         password: ""
     })
 
-    const [setCookie] = useCookies(['jwtToken'])
+    const [cookie, setCookie] = useCookies(['jwtToken'])
     const [isLogin, setIsLogin] = useState(false)
 
     function handleChange(e) {
@@ -37,24 +37,41 @@ export default function Login() {
         }
     }
 
-    if(isLogin){
-        return <Navigate to="/dashboard"/>
+    if (isLogin) {
+        return <Navigate to="/dashboard" />
     }
 
     return (
-        <div className="container mt-3">
-            <form autoComplete="off" method="post">
-                <div className="form-floating mb-3">
-                    <input type="email" className="form-control" id="email" name="email" placeholder="Email" onChange={handleChange} />
-                    <label htmlFor="email">Email address</label>
+        <div className="d-flex justify-content-center align-items-center vh-100">
+            <form method="post" className="p-4 bg-light rounded w-50" autoComplete="off">
+                <h2>Login</h2>
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">
+                        Email
+                    </label>
+                    <input
+                        type="email"
+                        className="form-control"
+                        id="email"
+                        name="email"
+                        onChange={handleChange}
+                    />
                 </div>
-
-                <div className="form-floating mb-3">
-                    <input type="password" className="form-control" id="password" name="password" placeholder="Password" onChange={handleChange} />
-                    <label htmlFor="password">Password</label>
+                <div className="mb-3">
+                    <label htmlFor="password" className="form-label">
+                        Password
+                    </label>
+                    <input
+                        type="password"
+                        className="form-control"
+                        id="password"
+                        name="password"
+                        onChange={handleChange}
+                    />
                 </div>
-
-                <input type="submit" className="btn btn-primary" value="Login" onClick={handleSubmit} />
+                <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                    Submit
+                </button>
             </form>
         </div>
     )
