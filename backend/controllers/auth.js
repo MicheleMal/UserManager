@@ -12,10 +12,21 @@ export const registerUser = async (req, res) => {
                 VALUES('${name}', '${surname}', '${email}', '${pwHashed}', '${tel_number}')`;
 
     connection.query(query, (error, result) => {
-        if (error)
-            return res
-                .status(400)
-                .json({ message: error.message, data: [], check: false });
+        if (error) {
+            if (error.code === "ER_DUP_ENTRY") {
+              return res.status(409).json({
+                message: error.message,
+                data: [],
+                check: false,
+              });
+            }
+        
+            return res.status(400).json({
+              message: error.message,
+              data: [],
+              check: false,
+            });
+          }
 
         try {
             return res.status(200).json({
@@ -52,14 +63,20 @@ export const loginUser = (req, res) => {
                 });
             }
 
-            if(await bcrypt.compare(password, result[0].password)){
-                const token = jwt.sign({
-                    id: result[0].id
-                },process.env.JWT_SECRET)
-                
-                return res.status(200).json({message:"Login in done", data:token, check:true})
-            }
+            if (await bcrypt.compare(password, result[0].password)) {
+                const token = jwt.sign(
+                    {
+                        id: result[0].id,
+                    },
+                    process.env.JWT_SECRET
+                );
 
+                return res.status(200).json({
+                    message: "Login in done",
+                    data: token,
+                    check: true,
+                });
+            }
         } catch (error) {
             return res
                 .status(400)
