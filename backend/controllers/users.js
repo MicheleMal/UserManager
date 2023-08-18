@@ -1,5 +1,9 @@
 import connection from "../utils/connectionDB.js";
-import { sendChangeRoleEmail } from "../utils/emailServices.js";
+import { decryptEmail } from "../utils/cryptDecryptEmail.js";
+import {
+    sendChangeAccountEmail,
+    sendChangeRoleEmail,
+} from "../utils/emailServices.js";
 
 // Gets all registered users
 export const getAllUsers = (req, res) => {
@@ -55,25 +59,45 @@ export const modiifyUser = (req, res) => {
     const { id } = req.user;
     const data = req.body;
 
-    const query = `UPDATE users SET ? WHERE id_user=${id}`;
+    const getEmailQuery = `SELECT email, name
+                            FROM users
+                            WHERE id_user = ${id}`;
 
-    connection.query(query, data, (error, result) => {
-        if (error)
-            return res
-                .status(400)
-                .json({ message: error.message, data: [], check: false });
-
-        try {
-            return res.status(200).json({
-                message: "User changed successfully",
-                data: result,
-                check: true,
-            });
-        } catch (error) {
+    connection.query(getEmailQuery, (error, result) => {
+        if (error) {
             return res
                 .status(400)
                 .json({ message: error.message, data: [], check: false });
         }
+
+        const userEmail = decryptEmail(
+            result[0].email,
+            process.env.key,
+            process.env.iv
+        );
+        const userName = result[0].name;
+
+        const updateQuery = `UPDATE users SET ? WHERE id_user=${id}`;
+
+        connection.query(updateQuery, data, (error, result) => {
+            if (error)
+                return res
+                    .status(400)
+                    .json({ message: error.message, data: [], check: false });
+
+            try {
+                sendChangeAccountEmail(userEmail, userName);
+                return res.status(200).json({
+                    message: "User changed successfully",
+                    data: result,
+                    check: true,
+                });
+            } catch (error) {
+                return res
+                    .status(400)
+                    .json({ message: error.message, data: [], check: false });
+            }
+        });
     });
 };
 
@@ -90,7 +114,7 @@ export const modifyRoleUser = (req, res) => {
                 .json({ message: error.message, data: [], check: false });
 
         try {
-            sendChangeRoleEmail(email, role)
+            sendChangeRoleEmail(email, role);
             return res.status(200).json({
                 message: "User role changed successfully",
                 data: result,

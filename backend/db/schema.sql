@@ -9,5 +9,7 @@ CREATE TABLE IF NOT EXISTS users(
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     tel_number VARCHAR(20) UNIQUE,
-    role ENUM("owner", "admin", "user") NOT NULL
+    role ENUM("owner", "admin", "user") NOT NULL,
+    token VARCHAR(255) NULL UNIQUE,
+    isVerified BOOLEAN DEFAULT false
 );

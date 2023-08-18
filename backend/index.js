@@ -1,6 +1,3 @@
-//TODO: Criptare email e aggiungere invio email modifica account
-//TODO: Aggiungere verifica account
-
 import epxress from "express"
 import cors from "cors"
 import "dotenv/config"

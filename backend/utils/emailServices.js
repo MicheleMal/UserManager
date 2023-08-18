@@ -9,12 +9,16 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-export const sendSignUpEmail = (email, name ) => {
+export const sendEmailRegister = (email, name, tokenConfirmation ) => {
     const mailOptions = {
         from: process.env.email,
         to: email,
-        subject: "Registration Confirmation",
-        text: `Dear ${name},\n\nThank you for registering on our website. Your account has been successfully created.\n\nBest regards,\nThe Team`,
+        subject: "Confirmation account",
+        html: `
+        <h1>Dear ${name}</h1>
+        <p>Thank you for registering on our website. \nTo complete the registration, please click on the confirmation link below:</p>
+        <a href="http://localhost:5000/auth/confirm/${tokenConfirmation}">http://localhost:5000/auth/confirm/${tokenConfirmation}</a>
+        <p>If you didn't request the registration, you can ignore this email.</p> `
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -41,4 +45,21 @@ export const sendChangeRoleEmail = (email, role)=>{
             console.log(`Email send ${info.response}`);
         }
     });
+}
+
+export const sendChangeAccountEmail = (email, name)=>{
+    const mailOptions = {
+        from: process.env.email,
+        to: email,
+        subject: "Account information update",
+        text: `Dear ${name},\n\nWe are writing to inform you that changes have been made to your account information personal.`
+    }
+
+    transporter.sendMail(mailOptions, (error, info)=>{
+        if (error) {
+            console.log(`Error sending email ${error.message}`);
+        } else {
+            console.log(`Email send ${info.response}`);
+        }
+    })
 }
