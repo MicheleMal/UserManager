@@ -35,19 +35,19 @@ User Manager is an application for user management, created using Node.js and My
 
 ### API Endpoints
 * POST auth/signup: Register a new user with provided details
-* POST auth/login: Perform login and return JWT Token for authentication
+* POST auth/login: Please login and return the JWT token for authentication only if the account is verified
+* POST auth/confirm/:tokenConfirmation: Perform account confirmation
+* GET manager/users/all: Retrieve all registered users requires administrator authorization
 * GET manager/users/profile: Get the information of the logged-in user (requires authentication)
 * PATCH manager/users/modify: Modify the account information of the logged-in user (requires authentication)
+* PATCH manager/users/modify/role: Modify a user's role via email, only for users with the admin or owner role
 * DELETE manager/users/delete: Delete the account of the logged-in user (requires authentication)
-* GET manager/users/all: Retrieve all registered users (__COMING SOON__: requires administrator authorization)
-
 ***
 
 ### Future Features
 
 1. User interface developed in React to interact with the APIs
-2. User role management
-3. More...
+2. More...
 
 ### Contributions
 
