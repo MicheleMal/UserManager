@@ -99,11 +99,19 @@ export const loginUser = (req, res) => {
                     }
                 );
 
-                return res.status(200).json({
-                    message: "Login in done",
-                    data: token,
-                    check: true,
-                });
+                return res
+                    .cookie("jwtToken", token, { httpOnly: true, secure: true })
+                    .status(200)
+                    .json({
+                        message: "Login is done",
+                        data: token,
+                        check: true,
+                    });
+                // return res.status(200).json({
+                //     message: "Login in done",
+                //     data: token,
+                //     check: true,
+                // });
             } else if (
                 (await bcrypt.compare(password, result[0].password)) &&
                 result[0].isVerified === 0

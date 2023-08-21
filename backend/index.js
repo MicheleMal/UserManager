@@ -1,3 +1,5 @@
+//TODO: Aggiungere documentazione API, aggiornare readme.md e aggiungere il frontend
+
 import epxress from "express"
 import cors from "cors"
 import "dotenv/config"
