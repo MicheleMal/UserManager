@@ -100,7 +100,7 @@ export const loginUser = (req, res) => {
                 );
 
                 return res
-                    .cookie("jwtToken", token, { httpOnly: true, secure: true })
+                    .cookie("jwtToken", token) // Aggiungere httpOnly e secure
                     .status(200)
                     .json({
                         message: "Login is done",
