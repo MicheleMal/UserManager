@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import connection from "../utils/connectionDB.js";
 import { decryptEmail } from "../utils/cryptDecryptEmail.js";
 import {
@@ -63,7 +64,7 @@ export const modiifyUser = (req, res) => {
                             FROM users
                             WHERE id_user = ${id}`;
 
-    connection.query(getEmailQuery, (error, result) => {
+    connection.query(getEmailQuery, async (error, result) => {
         if (error) {
             return res
                 .status(400)
@@ -76,6 +77,14 @@ export const modiifyUser = (req, res) => {
             process.env.iv
         );
         const userName = result[0].name;
+
+        // Crypt password
+        if (data.password) {
+            const salt = bcrypt.genSaltSync(10);
+            const pwHashed = await bcrypt.hash(data.password, salt);
+
+            data.password = pwHashed;
+        }
 
         const updateQuery = `UPDATE users SET ? WHERE id_user=${id}`;
 

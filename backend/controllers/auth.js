@@ -95,12 +95,17 @@ export const loginUser = (req, res) => {
                     },
                     process.env.JWT_SECRET,
                     {
-                        expiresIn: "7d", // 7 giorni
+                       expiresIn: "7d" , // 7 giorni
                     }
                 );
 
+                const expiresInMilliseconds = 7 * 24 * 60 * 60 * 1000
+
                 return res
-                    .cookie("jwtToken", token) // Aggiungere httpOnly e secure
+                    .cookie("jwtToken", token, {
+                        httpOnly: true,
+                        expires:  new Date(Date.now() + expiresInMilliseconds) // 7 giorni
+                    }) // Aggiungere httpOnly e secure
                     .status(200)
                     .json({
                         message: "Login is done",
