@@ -18,7 +18,7 @@ export const authenticateToken = (req, res, next) => {
 
     if (token == null) {
         return res
-            .status(400)
+            .status(404)
             .json({ message: "Token nullo", data: [], check: false });
     }
 
