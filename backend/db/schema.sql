@@ -11,5 +11,6 @@ CREATE TABLE IF NOT EXISTS users(
     tel_number VARCHAR(20) UNIQUE,
     role ENUM("owner", "admin", "user") NOT NULL,
     token VARCHAR(255) NULL UNIQUE,
+    otp VARCHAR(6) NULL UNIQUE,
     isVerified BOOLEAN DEFAULT false
 );
