@@ -56,7 +56,7 @@ export const registerUser = async (req, res) => {
                 return res.status(201).json({
                     message: "Registration done",
                     data: result,
-                    check: false,
+                    check: true,
                 });
             });
         } catch (error) {
@@ -104,10 +104,11 @@ export const loginUser = (req, res) => {
                 );
 
                 const expiresInMilliseconds = 7 * 24 * 60 * 60 * 1000;
+                // const expiresInMilliseconds = 1000; // 1 secondo
 
                 return res
                     .cookie("jwtToken", token, {
-                        httpOnly: true,
+                        // httpOnly: true,
                         expires: new Date(Date.now() + expiresInMilliseconds), // 7 giorni
                     }) // Aggiungere httpOnly e secure
                     .status(200)
@@ -171,7 +172,7 @@ export const confirmAccount = (req, res) => {
             return res.status(200).json({
                 message: "Account verified",
                 data: result,
-                check: false,
+                check: true,
             });
         } catch (error) {
             return res.status(500).json({

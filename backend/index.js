@@ -1,4 +1,5 @@
-//TODO: Aggiungere documentazione API, aggiornare readme.md e aggiungere il frontend
+// TODO: Aggiungere aggiornare readme.md ed eliminare tutti gli spazi prima di inserire nel db (nome, cognome, password, email, tel_number)
+// ?: Cancellare token dopo la verifica dell'account 
 
 import epxress from "express"
 import cors from "cors"

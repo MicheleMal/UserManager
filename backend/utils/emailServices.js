@@ -17,7 +17,7 @@ export const sendEmailRegister = (email, name, tokenConfirmation) => {
         html: `
         <h1>Dear ${name}</h1>
         <p>Thank you for registering on our website. \nTo complete the registration, please click on the confirmation link below:</p>
-        <a href="http://localhost:5000/auth/confirm/${tokenConfirmation}">http://localhost:5000/auth/confirm/${tokenConfirmation}</a>
+        <a href="http://localhost:3000/auth/confirm/${tokenConfirmation}">http://localhost:5000/auth/confirm/${tokenConfirmation}</a>
         <p>If you didn't request the registration, you can ignore this email.</p> `,
     };
 

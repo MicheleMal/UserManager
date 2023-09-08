@@ -27,8 +27,8 @@ export default function NavbarComponent() {
                             </Nav.Link>
                         </Nav>
                     ) : (
-                        <Nav className='"ml-auto'>
-                            <Nav.Link as={NavLink} to="/login">
+                        <Nav className='"ml-auto'>  
+                            <Nav.Link as={NavLink} to="/authentication">
                                 Login
                             </Nav.Link>
                         </Nav>

@@ -1,6 +1,6 @@
 // import axios from "axios"
 import axios from "axios";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Container } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
@@ -13,6 +13,7 @@ export default function Dashboard() {
 
     async function fetchData() {
         try {
+            console.log("Chiamata a fetchData in corso...");
             const res = await axios.get(
                 "http://localhost:5000/manager/users/profile",
                 {
@@ -25,6 +26,7 @@ export default function Dashboard() {
             if (res.data.check === true) {
                 setUser(res.data.data[0]);
             }
+            console.log("Chiamata a fetchData completata con successo!");
         } catch (error) {
             console.error(error);
         }
@@ -54,7 +56,7 @@ export default function Dashboard() {
             );
 
             if (res.data.check === true) {
-                setShowAlertSuccess(true)
+                setShowAlertSuccess(true);
             }
         } catch (error) {
             console.error(error);
@@ -66,57 +68,67 @@ export default function Dashboard() {
     }, []); // [] Indica che l'effetto viene eseguito una sola volta
 
     return (
-        <>
-            <h1>Benvenuto {user.name}</h1>
-
-            <h3>Modifica informazioni</h3>
-            <Form method="POST" autoComplete="off">
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter name"
-                        name="name"
-                        value={user.name}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Surname</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter surname"
-                        name="surname"
-                        value={user.surname}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-
-                {/* TODO: Aggiungere modifica passowrd */}
-
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Telephone Number</Form.Label>
-                    <Form.Control
-                        type="tel"
-                        placeholder="Enter telephone number"
-                        name="tel_number"
-                        value={user.tel_number}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-
-                <Button variant="primary" type="submit" onClick={handleSubmit}>
-                    Modify
-                </Button>
-            </Form>
-
+        <Container className="mt-5">
             {showAlertSuccess && (
                 <Alert key="success" variant="success">
                     Account information changed successfully. Confirmation has
                     been sent by email
                 </Alert>
             )}
-        </>
+            <h2>Profilo Utente</h2>
+            <Form onSubmit={handleSubmit} autoComplete="off" method="POST">
+                <Form.Group controlId="firstName">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="name"
+                        placeholder="Enter name"
+                        value={user.name}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
+
+                <Form.Group controlId="lastName">
+                    <Form.Label>Surname</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="surname"
+                        placeholder="Enter surname"
+                        value={user.surname}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
+
+                <Form.Group controlId="password">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                        // value={user.password}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
+
+                <Form.Group controlId="telNumber">
+                    <Form.Label>Telephone Number</Form.Label>
+                    <Form.Control
+                        type="tel"
+                        name="tel_number"
+                        placeholder="Enter telephone number"
+                        value={user.tel_number}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
+
+                <Button
+                    className="mt-3"
+                    variant="primary"
+                    type="submit"
+                >
+                    Save Changes
+                </Button>
+            </Form>
+        </Container>
     );
 }
