@@ -4,7 +4,7 @@ User Manager is an application for user management, created using Node.js and My
 
 ***
 
-### Features:
+## Features:
 
 * Register a new user
 * Login to get JWT token
@@ -14,46 +14,48 @@ User Manager is an application for user management, created using Node.js and My
 * Retrieve all registered users (only for administrators and owner)
 * Modify a user's role via email (admin and owner only)
 
-### Technologies Used:
+## Technologies Used:
 * Node.js
 * MySQL
 * JWT (JSON Web Token)
 * Bcrypt (for password encryption)
+* crypto (for email encryption)
 
-### Installation
+## Installation
 
-1. Clone the repository to a local directory: __git clone <repository_url>__
+Clone the repository to a local directory: __git clone <repository_url>__
 
-2. Install dependencies using npm: __npm install__
+
+### Frontend
+1. Navigate to the `frontend` directory: `cd frontend`
+
+2. Install frontend dependencies using npm: `npm install`
+
+3. Start the frontend: `npm start`
+   * The React application will be accessible at: `http://localhost:3000`
+
+### Backend
+1. Clone the repository to a local directory: `git clone <repository_url>`
+
+2. Install dependencies using npm: `npm install`
 
 3. Configure the MySQL database:
-   * Create a new MySQL database using the __backend/db/schema.sql__ file
-   * Modify the database connection information in the .env file
+   * Create a new MySQL database using the `backend/db/schema.sql` file
+   * Modify the database connection information in the `.env` file
 
-### Run the Application
-* npm start
-* The APIs will be accessible at: http://localhost:3000
+4. Run the backend server: `npm start`
+   * The APIs will be accessible at: `http://localhost:3000`
 
-### API Endpoints
-* POST auth/signup: Register a new user with provided details
-* POST auth/login: Please login and return the JWT token for authentication only if the account is verified
-* POST auth/confirm/:tokenConfirmation: Perform account confirmation
-* GET manager/users/all: Retrieve all registered users requires administrator authorization
-* GET manager/users/profile: Get the information of the logged-in user (requires authentication)
-* PATCH manager/users/modify: Modify the account information of the logged-in user (requires authentication)
-* PATCH manager/users/modify/role: Modify a user's role via email, only for users with the admin or owner role
-* DELETE manager/users/delete: Delete the account of the logged-in user (requires authentication)
 ***
 
-### Future Features
+## Future Features
 
-1. User interface developed in React to interact with the APIs
-2. More...
+1. More...
 
-### Contributions
+## Contributions
 
 Contributions are welcome to improve and expand the features of User Manager. If you'd like to contribute, please open a pull request with your changes.
 
-### License
+## License
 
 This project is licensed under the terms of the MIT license. Please see the LICENSE file for more information.

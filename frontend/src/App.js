@@ -7,6 +7,8 @@ import AuthenticationPage from "./components/AuthenticationPage";
 import ConfirmationPage from "./components/ConfirmationPage";
 import ResetPassword from "./components/ResetPassword";
 
+// TODO: Sviluppare due componennti (login e register) figli del componente Dashboard
+
 function App() {
     return (
         <Router>
