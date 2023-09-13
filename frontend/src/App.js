@@ -5,7 +5,7 @@ import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import AuthenticationPage from "./components/AuthenticationPage";
 import ConfirmationPage from "./components/ConfirmationPage";
-
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
     return (
@@ -19,6 +19,7 @@ function App() {
                     path="/auth/confirm/:tokenConfirmation"
                     element={<ConfirmationPage/>}
                 />
+                <Route path="/reset-password" element={<ResetPassword/>}/>
                 <Route path="/dashboard" element={<Dashboard/>}/>
 
                 {/* <Route path="*" Component={NotFound} /> TODO: Aggiungere pagina 404*/}

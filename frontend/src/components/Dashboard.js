@@ -1,7 +1,7 @@
 // import axios from "axios"
 import axios from "axios";
 import { Form, Button, Alert, Container } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 
 export default function Dashboard() {
@@ -11,26 +11,7 @@ export default function Dashboard() {
     const [user, setUser] = useState([]);
     const [showAlertSuccess, setShowAlertSuccess] = useState(false);
 
-    async function fetchData() {
-        try {
-            console.log("Chiamata a fetchData in corso...");
-            const res = await axios.get(
-                "http://localhost:5000/manager/users/profile",
-                {
-                    headers: {
-                        Authorization: `Bearer ${jwtToken}`,
-                    },
-                }
-            );
-
-            if (res.data.check === true) {
-                setUser(res.data.data[0]);
-            }
-            console.log("Chiamata a fetchData completata con successo!");
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    const url = "http://localhost:5000/manager/users/profile";
 
     async function handleChange(e) {
         const { name, value } = e.target;
@@ -63,7 +44,25 @@ export default function Dashboard() {
         }
     }
 
+    async function fetchData() {
+        try {
+            const { data } = await axios.get(url, {
+                headers: { Authorization: `Bearer ${jwtToken}` },
+            });
+
+            if (data.check === true) {
+                console.log("Fetch...");
+                setUser(data.data[0]);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const fetchDataCalled = useRef(false);
     useEffect(() => {
+        if (fetchDataCalled.current) return;
+        fetchDataCalled.current = true;
         fetchData();
     }, []); // [] Indica che l'effetto viene eseguito una sola volta
 
@@ -121,11 +120,7 @@ export default function Dashboard() {
                     />
                 </Form.Group>
 
-                <Button
-                    className="mt-3"
-                    variant="primary"
-                    type="submit"
-                >
+                <Button className="mt-3" variant="primary" type="submit">
                     Save Changes
                 </Button>
             </Form>

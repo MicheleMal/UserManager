@@ -52,6 +52,7 @@ export default function AuthenticationPage() {
         }
     }
 
+    // Login 
     async function handleLoginSubmit(e) {
         e.preventDefault();
 
@@ -69,18 +70,19 @@ export default function AuthenticationPage() {
                 navigate("/dashboard");
             }
         } catch (error) {
-            if (error.response && error.response.status === 404) {
+            if(error.response.status === 401){
                 setLoginInfo({
                     message: error.response.data.message,
-                    status: "danger",
-                });
-            } else if (error.response && error.response.status === 401) {
+                    status: "warning"
+                })
+            }else if(error.response.status === 404){
                 setLoginInfo({
-                    message: "Account not verified, check his email",
-                    status: "warning",
-                });
+                    message: error.response.data.message,
+                    status: "danger"
+                })
             }
         }
+
     }
 
     async function handleRegisterSubmit(e) {
@@ -154,7 +156,7 @@ export default function AuthenticationPage() {
                                     {/* <a href="/password-dimenticata">
                                         Forgot password?
                                     </a> */}
-                                    <Link to="/">Forgot password?</Link>
+                                    <Link to="/reset-password">Forgot password?</Link>
                                 </Form.Group>
 
                                 {loginInfo.message && (

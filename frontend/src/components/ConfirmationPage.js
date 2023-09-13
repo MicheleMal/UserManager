@@ -1,48 +1,53 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, Button, Alert } from "react-bootstrap";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function ConfirmationPage() {
-    const navigate = useNavigate();
-    const [showInfo, setShowInfo] = useState({
-        message: "",
-        status: "",
-    });
     const { tokenConfirmation } = useParams();
-    // const [confirmed, setConfirmed] = useState(false);
 
-    async function controllConfirm() {
+    const [confirmed, setConfirmed] = useState()
+    const url = `http://localhost:5000/auth/confirm/${tokenConfirmation}`;
+
+    async function fetchData(){
         try {
-            const res = await axios.get(
-                `http://localhost:5000/auth/confirm/${tokenConfirmation}`
-            );
+            const {data} = await axios.get(url)
 
-            if (res.data.check === true) {
-                navigate("/authentication");
-                // setConfirmed(true);
-                // setShowInfo({
-                //     message: res.data.message,
-                //     status: "success",
-                // });
+            if(data.check === true){
+                setConfirmed(true)
             }
         } catch (error) {
-            setShowInfo({
-                message: error.response.data.message,
-                status: "danger",
-            });
+            if(error.response.data.check === false){
+                setConfirmed(false)
+            }
         }
     }
 
-    useEffect(() => {
-        controllConfirm(); // Richiama la funzione solo se il flag è false
-    }, []); // Osserva il flag come dipendenza
+    const fetchDataCalled = useRef(false)
+    useEffect(()=>{
+        if(fetchDataCalled.current) return
+        fetchDataCalled.current = true
+        fetchData()
+    }, [])
 
     return (
         <Container className="mt-5">
-            {showInfo.message && (
-                <Alert variant={showInfo.status}>{showInfo.message}</Alert>
-            )}
+            {confirmed ? (
+                <div>
+                    <Link to="/authentication">
+                        <Button variant="success" to="/authentication">Login</Button>
+                    </Link>
+                    <Alert variant="success" className="mt-3">Account verificato</Alert>
+                </div>
+            ): (
+                <div>
+                    <Link to="/authentication">
+                        <Button variant="danger" to="/authentication">Login</Button>
+                    </Link>
+                    <Alert variant="danger" className="mt-3">Account già verificato</Alert>
+                </div>
+            )
+            }
         </Container>
     );
 }
