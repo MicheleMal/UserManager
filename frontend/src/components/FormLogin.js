@@ -37,6 +37,7 @@ export default function FormLogin() {
             ); // permette di inviare e ricevere i cookie con la richiesta HTTP
 
             if (res.status === 200 && res.data.check === true) {
+                localStorage.setItem("jwtToken", res.data.data);
                 navigate("/dashboard");
             }
         } catch (error) {

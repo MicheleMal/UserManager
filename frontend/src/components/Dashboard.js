@@ -2,12 +2,12 @@
 import axios from "axios";
 import { Form, Button, Alert, Container } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
-import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-    const [cookies] = useCookies(["jwtToken"]);
-    const jwtToken = cookies.jwtToken;
+    const jwtToken = localStorage.getItem("jwtToken");
 
+    const navigate = useNavigate()
     const [user, setUser] = useState([]);
     const [showAlertSuccess, setShowAlertSuccess] = useState(false);
 
@@ -59,8 +59,16 @@ export default function Dashboard() {
         }
     }
 
+    function logout(){
+        localStorage.removeItem("jwtToken")
+        navigate("/")
+    }
+
     const fetchDataCalled = useRef(false);
     useEffect(() => {
+        if(!localStorage.getItem("jwtToken")){
+            navigate("/")
+        }
         if (fetchDataCalled.current) return;
         fetchDataCalled.current = true;
         fetchData();
@@ -124,6 +132,10 @@ export default function Dashboard() {
                     Save Changes
                 </Button>
             </Form>
+
+            <Button className="mt-3" variant="danger" onClick={logout} type="button">
+                    Logout
+            </Button>
         </Container>
     );
 }

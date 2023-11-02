@@ -107,21 +107,12 @@ export const loginUser = (req, res) => {
                 // const expiresInMilliseconds = 1000; // 1 secondo
 
                 return res
-                    .cookie("jwtToken", token, {
-                        // httpOnly: true,
-                        expires: new Date(Date.now() + expiresInMilliseconds), // 7 giorni
-                    }) // Aggiungere httpOnly e secure
                     .status(200)
                     .json({
                         message: "Login is done",
                         data: token,
                         check: true,
                     });
-                // return res.status(200).json({
-                //     message: "Login in done",
-                //     data: token,
-                //     check: true,
-                // });
             } else if (
                 (await bcrypt.compare(password, result[0].password)) &&
                 result[0].isVerified === 0

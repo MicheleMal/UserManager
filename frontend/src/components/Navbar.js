@@ -1,10 +1,8 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { useCookies } from "react-cookie";
 import { NavLink } from "react-router-dom";
 
 export default function NavbarComponent() {
-    const [cookies] = useCookies(["jwtToken"]);
-    const jwtToken = cookies.jwtToken;
+    const jwtToken = localStorage.getItem("jwtToken");
 
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
