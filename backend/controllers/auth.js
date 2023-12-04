@@ -18,14 +18,21 @@ export const registerUser = async (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const pwHashed = await bcrypt.hash(password, salt);
 
+    let errorMessage = ""
+
     const query = `INSERT INTO users(name, surname, email, password, tel_number, role)
                 VALUES('${name}', '${surname}', '${emailCrypt}', '${pwHashed}', '${tel_number}', 'user')`;
 
     connection.query(query, (error, result) => {
         if (error) {
             if (error.code === "ER_DUP_ENTRY") {
+                if(error.sqlMessage.includes("email")){
+                    errorMessage += "Email already registered"
+                }else if(error.sqlMessage.includes("tel_number")){
+                    errorMessage += "Telephone number already present"
+                }
                 return res.status(409).json({
-                    message: error.message,
+                    message: errorMessage,
                     data: [],
                     check: false,
                 });
@@ -140,7 +147,7 @@ export const loginUser = (req, res) => {
 export const confirmAccount = (req, res) => {
     const { tokenConfirmation } = req.params;
 
-    const query = `UPDATE users SET isVerified = 1 WHERE token = '${tokenConfirmation}' `;
+    const query = `UPDATE users SET isVerified = 1, token = NULL WHERE token = '${tokenConfirmation}' `;
 
     connection.query(query, (error, result) => {
         if (error) {

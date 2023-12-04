@@ -12,7 +12,7 @@ const app = epxress()
 
 app.use(epxress.json())
 app.use(cors({
-    origin: "http://localhost:3000", // Specifica l'origine del frontend
+    origin: "http://localhost:5173", // Specifica l'origine del frontend
     credentials: true // Consenti l'invio dei cookie
 }))
 
