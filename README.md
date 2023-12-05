@@ -32,7 +32,7 @@ Clone the repository to a local directory: __git clone <repository_url>__
 2. Install frontend dependencies using npm: `npm install`
 
 3. Start the frontend: `npm start`
-   * The React application will be accessible at: `http://localhost:3000`
+   * The Vite+React application will be accessible at: `http://localhost:5173`
 
 ### Backend
 1. Clone the repository to a local directory: `git clone <repository_url>`
@@ -44,7 +44,7 @@ Clone the repository to a local directory: __git clone <repository_url>__
    * Modify the database connection information in the `.env` file
 
 4. Run the backend server: `npm start`
-   * The APIs will be accessible at: `http://localhost:3000`
+   * The APIs will be accessible at: `http://localhost:5000`
 
 ***
 

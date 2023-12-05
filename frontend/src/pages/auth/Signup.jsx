@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { Navbar } from "../../components/Navbar"
 import { useState } from "react"
 import axios from "axios"
+import { Snackbar } from "../../components/Snackbar"
 
 export const Signup = () => {
 
@@ -11,6 +12,11 @@ export const Signup = () => {
         email: "",
         password: "",
         tel_number: ""
+    })
+
+    const [error, setError] = useState({
+        status: "",
+        message: ""
     })
 
     const handleChange = (e) => {
@@ -26,7 +32,7 @@ export const Signup = () => {
         e.preventDefault()
 
         await axios.post("http://127.0.0.1:5000/auth/signup", formSignup).then((res) => {
-            if(res.status===201){
+            if (res.status === 201) {
                 console.log(res);
                 setFormSignup({
                     name: "",
@@ -36,9 +42,12 @@ export const Signup = () => {
                     tel_number: ""
                 })
             }
-        }).catch((error)=>{
-            if(error.response.status===409){
-                console.log(error.response.data.message);
+        }).catch((error) => {
+            if (error.response.status === 409) {
+                setError({
+                    status: "error",
+                    message: error.response.data.message
+                })
             }
         })
     }
@@ -48,6 +57,11 @@ export const Signup = () => {
             <Navbar></Navbar>
             <div className="flex items-center justify-center min-h-screen">
                 <div className="bg-white p-8 rounded shadow-md 0 w-full sm:w-96">
+                    {
+                        error.status ? (
+                            <Snackbar errorMessage={error.message} statusError={error.status} />
+                        ) : null
+                    }
                     <h2 className="text-2xl font-bold mb-4 text-gray-800">Sign Up</h2>
                     <form autoComplete="off" onSubmit={handleSubmit}>
                         <div className="mb-4">

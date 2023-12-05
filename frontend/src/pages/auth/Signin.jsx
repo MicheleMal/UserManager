@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { Navbar } from "../../components/Navbar"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { Snackbar } from "../../components/Snackbar"
 
 export const Signin = () => {
 
@@ -10,6 +11,11 @@ export const Signin = () => {
     const [formSignin, setFormSignin] = useState({
         email: "",
         password: ""
+    })
+
+    const [error, setError] = useState({
+        status: "",
+        message: ""
     })
 
     const handleChange = (e) => {
@@ -31,9 +37,15 @@ export const Signin = () => {
             }
         }).catch((error) => {
             if (error.response.status === 404) {
-                console.log(error.response.data.message);
-            }else if(error.response.status===401){
-                console.log(error.response.data.message);
+                setError({
+                    status: "error",
+                    message: error.response.data.message
+                })
+            } else if (error.response.status === 401) {
+                setError({
+                    status: "warning",
+                    message: error.response.data.message
+                })
             }
         })
 
@@ -55,6 +67,12 @@ export const Signin = () => {
             <Navbar></Navbar>
             <div className="form-signin flex items-center justify-center min-h-screen">
                 <div className="bg-white p-8 rounded shadow-md 0 w-full sm:w-96">
+                    {
+                        error.status ? (
+                            <Snackbar errorMessage={error.message} statusError={error.status} />
+                        ) : null
+                    }
+
                     <h2 className="text-2xl font-bold mb-4 text-gray-800">Sign In</h2>
                     <form autoComplete="off" onSubmit={handleSubmit}>
                         <div className="mb-4">
