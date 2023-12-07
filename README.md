@@ -11,8 +11,6 @@ User Manager is an application for user management, created using Node.js and My
 * Access information of logged in user
 * Modify the account information of the logged in user
 * Delete the account of the logged in user
-* Retrieve all registered users (only for administrators and owner)
-* Modify a user's role via email (admin and owner only)
 
 ## Technologies Used:
 * Node.js

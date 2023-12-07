@@ -28,7 +28,12 @@ const router = createBrowserRouter([
   {
     path: "/auth/confirm/:tokenConfirmation",
     element: <ConfirmAccount/>
-  }
+  },
+  {
+    //? Aggiungere pagina reset password
+    path: "/reset-password",
+    element: <Profile/>
+  }  
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(

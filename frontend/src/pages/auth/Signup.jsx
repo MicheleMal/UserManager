@@ -33,13 +33,17 @@ export const Signup = () => {
 
         await axios.post("http://127.0.0.1:5000/auth/signup", formSignup).then((res) => {
             if (res.status === 201) {
-                console.log(res);
                 setFormSignup({
                     name: "",
                     surname: "",
                     email: "",
                     password: "",
                     tel_number: ""
+                })
+
+                setError({
+                    status: "success",
+                    message: "Registration done, I'll check your email inbox"
                 })
             }
         }).catch((error) => {
@@ -65,7 +69,7 @@ export const Signup = () => {
                     <h2 className="text-2xl font-bold mb-4 text-gray-800">Sign Up</h2>
                     <form autoComplete="off" onSubmit={handleSubmit}>
                         <div className="mb-4">
-                            <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                            <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">Name</label>
                             <input
                                 type="text"
                                 id="name"
@@ -73,11 +77,12 @@ export const Signup = () => {
                                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                                 placeholder="Enter your name"
                                 onChange={handleChange}
+                                value={formSignup.name}
                                 required
                             />
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">Surname</label>
+                            <label htmlFor="surname" className="block text-gray-700 text-sm font-bold mb-2">Surname</label>
                             <input
                                 type="text"
                                 id="surname"
@@ -85,6 +90,7 @@ export const Signup = () => {
                                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                                 placeholder="Enter your surname"
                                 onChange={handleChange}
+                                value={formSignup.surname}
                                 required
                             />
                         </div>
@@ -97,6 +103,7 @@ export const Signup = () => {
                                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                                 placeholder="Enter your email"
                                 onChange={handleChange}
+                                value={formSignup.email}
                                 required
                             />
                         </div>
@@ -109,11 +116,12 @@ export const Signup = () => {
                                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                                 placeholder="Enter your password"
                                 onChange={handleChange}
+                                value={formSignup.password}
                                 required
                             />
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">Telephone number</label>
+                            <label htmlFor="tel_number" className="block text-gray-700 text-sm font-bold mb-2">Telephone number</label>
                             <input
                                 type="tel"
                                 id="tel_number"
@@ -121,6 +129,7 @@ export const Signup = () => {
                                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                                 placeholder="Enter your telephone number"
                                 onChange={handleChange}
+                                value={formSignup.tel_number}
                                 required
                             />
                         </div>

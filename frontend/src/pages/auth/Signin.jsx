@@ -49,10 +49,10 @@ export const Signin = () => {
             }
         })
 
-        setFormSignin({
-            email: "",
-            password: ""
-        })
+        // setFormSignin({
+        //     email: "",
+        //     password: ""
+        // })
     }
 
     useEffect(() => {
@@ -112,6 +112,11 @@ export const Signin = () => {
                         Don't have an account?{' '}
                         <Link to={"/signup"} className="text-blue-500 hover:underline">Sign up</Link>
                     </p>
+                    <p className="mt-4 text-gray-700 text-sm">
+                        Forgot your password?{' '}
+                        <Link to={"/reset-password"} className="text-red-600 hover:underline">Reset it here.</Link>
+                    </p>
+
                 </div>
             </div>
         </>
