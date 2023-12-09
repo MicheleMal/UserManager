@@ -233,7 +233,7 @@ export const resetPasswordRequest = (req, res) => {
 
 export const resetPassword = (req, res) => {
     const { otp, password } = req.body;
-
+    
     const query = `SELECT email FROM users WHERE BINARY otp='${otp}' `;
 
     connection.query(query, async (error, result) => {

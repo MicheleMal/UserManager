@@ -7,6 +7,7 @@ import { Signin } from './pages/auth/Signin.jsx'
 import { Signup } from './pages/auth/Signup.jsx'
 import { Profile } from './pages/Profile.jsx'
 import { ConfirmAccount } from './pages/auth/ConfirmAccount.jsx'
+import { ResetPassword } from './pages/auth/reset-password/ResetPassword.jsx'
 
 const router = createBrowserRouter([
   {
@@ -30,9 +31,8 @@ const router = createBrowserRouter([
     element: <ConfirmAccount/>
   },
   {
-    //? Aggiungere pagina reset password
     path: "/reset-password",
-    element: <Profile/>
+    element: <ResetPassword/>
   }  
 ])
 

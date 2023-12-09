@@ -1,7 +1,6 @@
 export const Snackbar = ({ errorMessage, statusError }) => {
 
     const getBgColor = () => {
-        console.log(statusError);
         if(statusError==="warning"){
             return "bg-yellow-500"
         }else if(statusError==="success"){
