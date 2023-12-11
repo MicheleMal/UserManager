@@ -63,7 +63,7 @@ export const Signup = () => {
                 <div className="bg-white p-8 rounded shadow-md 0 w-full sm:w-96">
                     {
                         error.status ? (
-                            <Snackbar errorMessage={error.message} statusError={error.status} />
+                            <Snackbar message={error.message} status={error.status} />
                         ) : null
                     }
                     <h2 className="text-2xl font-bold mb-4 text-gray-800">Sign Up</h2>

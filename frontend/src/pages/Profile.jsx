@@ -10,7 +10,9 @@ export const Profile = () => {
     const isLoggedIn = localStorage.getItem("token") !== null
     const token = localStorage.getItem("token")
 
-    const [formProfile, setFormProfile] = useState({
+    const [user, setUser] = useState({
+        name: "",
+        surname: "",
         password: "",
         tel_number: ""
     })
@@ -23,8 +25,8 @@ export const Profile = () => {
     const handleChange = (e) => {
         const { name, value } = e.target
 
-        setFormProfile({
-            ...formProfile,
+        setUser({
+            ...user,
             [name]: value
         })
     }
@@ -32,29 +34,55 @@ export const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        await axios.patch("http://127.0.0.1:5000/manager/users/modify", formProfile, { headers: { Authorization: `Bearer ${token}` } }).then((res) => {
-            setError({
-                status: "success",
-                message: res.data.message
-            })
+        await axios.patch("http://127.0.0.1:5000/manager/users/modify", user, { headers: { Authorization: `Bearer ${token}` } }).then((res) => {
+            if (res.status === 200) {
+                setError({
+                    status: "success",
+                    message: res.data.message
+                })
+            }
+
         }).catch((error) => {
             console.log(error.message);
         })
     }
 
-    const handleClick = () => {
+    const handleLogout = () => {
         localStorage.removeItem("token")
         navigate("/")
+    }
+
+    const handleDelete = ()=>{
+        axios.delete("http://127.0.0.1:5000/manager/users/delete",{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((res)=>{
+            if(res.status===200){
+                localStorage.removeItem("token")
+                navigate("/")
+            }
+        }).catch((error)=>{
+            console.log(error.message);
+        })
     }
 
     const getUser = async () => {
         await axios.get("http://127.0.0.1:5000/manager/users/profile", { headers: { Authorization: `Bearer ${token}` } }).then((res) => {
             if (res.status === 200) {
-                setFormProfile({
+                // setFormProfile({
+                //     password: res.data.data[0].password, 
+                //     tel_number: res.data.data[0].tel_number,
+                // })
+                setUser({
+                    name: res.data.data[0].name,
+                    surname: res.data.data[0].surname,
                     password: res.data.data[0].password,
                     tel_number: res.data.data[0].tel_number,
                 })
             }
+        }).catch((error)=>{
+            console.log(error.message)
         })
     }
 
@@ -73,11 +101,11 @@ export const Profile = () => {
                         <div className="bg-white p-8 rounded shadow-md 0 w-full sm:w-96">
                             {
                                 error.status ? (
-                                    <Snackbar errorMessage={error.message} statusError={error.status} />
+                                    <Snackbar message={error.message} status={error.status} />
                                 ) : null
                             }
 
-                            <h2 className="text-2xl font-bold mb-4 text-gray-800">Benvenuto/a</h2>
+                            <h2 className="text-2xl font-bold mb-4 text-gray-800">Benvenuto/a {user.name}</h2>
                             <h3 className="text-xl mb-4 text-gray-800">Puoi modificare le tue informazioni</h3>
                             <form autoComplete="off" onSubmit={handleSubmit}>
                                 <div className="mb-4">
@@ -89,8 +117,7 @@ export const Profile = () => {
                                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                                         placeholder="Enter your password"
                                         onChange={handleChange}
-                                        // value={formProfile.password}
-                                        required
+                                    // value={formProfile.password}
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -102,8 +129,8 @@ export const Profile = () => {
                                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                                         placeholder="Enter your telephone number"
                                         onChange={handleChange}
-                                        value={formProfile.tel_number}
-                                        required
+                                        // value={formProfile.tel_number}
+                                        value={user.tel_number}
                                     />
                                 </div>
                                 <button
@@ -115,10 +142,18 @@ export const Profile = () => {
 
                                 <button
                                     type="button"
-                                    className="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600 mt-5"
-                                    onClick={handleClick}
+                                    className="w-full bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-orange-600 focus:outline-none focus:bg-orange-600 mt-5"
+                                    onClick={handleLogout}
                                 >
                                     Logout
+                                </button>
+
+                                <button
+                                    type="button"
+                                    className="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600 mt-5"
+                                    onClick={handleDelete}
+                                >
+                                    Delete profile
                                 </button>
                             </form>
                         </div>
