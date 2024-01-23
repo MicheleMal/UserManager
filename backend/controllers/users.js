@@ -5,6 +5,7 @@ import {
     sendChangeAccountEmail,
     sendChangeRoleEmail,
 } from "../utils/emailServices.js";
+import { trim } from "../utils/trim.js";
 
 // Gets all registered users
 export const getAllUsers = (req, res) => {
@@ -18,9 +19,14 @@ export const getAllUsers = (req, res) => {
                 .json({ message: error.message, data: [], check: false });
 
         try {
+            result.map(user => {
+                user.email = decryptEmail(user.email, process.env.key, process.env.iv)
+                user.isVerified = user.isVerified === 1 ? "true" : "false"
+            })
+
             return res
                 .status(200)
-                .json({ message: "Users", data: result, check: true });
+                .json({ message: "All users", data: result, check: true });
         } catch (error) {
             return res
                 .status(400)
@@ -112,9 +118,9 @@ export const modiifyUser = (req, res) => {
 
 // Change role user
 export const modifyRoleUser = (req, res) => {
-    const { email, role } = req.body;
+    const { id_user, email, role } = req.body;
 
-    const query = `UPDATE users SET role='${role}' WHERE email='${email}'`;
+    const query = `UPDATE users SET role='${role}' WHERE id_user=${id_user}`;
 
     connection.query(query, (error, result) => {
         if (error)
@@ -123,7 +129,7 @@ export const modifyRoleUser = (req, res) => {
                 .json({ message: error.message, data: [], check: false });
 
         try {
-            sendChangeRoleEmail(email, role);
+            sendChangeRoleEmail(trim(email), role);
             return res.status(200).json({
                 message: "User role changed successfully",
                 data: result,

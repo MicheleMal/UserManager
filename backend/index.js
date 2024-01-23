@@ -1,5 +1,5 @@
-// TODO: Aggiungere aggiornare readme.md ed eliminare tutti gli spazi prima di inserire nel db (nome, cognome, password, email, tel_number)
-// ?: Cancellare token dopo la verifica dell'account 
+//TODO Aggiungere aggiornare readme.md
+//TODO Scrivere il file api-documentation.md
 
 import epxress from "express"
 import cors from "cors"
@@ -21,6 +21,6 @@ app.use("/auth", authRoutes)
 
 const PORT = process.env.PORT || 5001
 
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log(`Server listen on port ${PORT}`)
 })

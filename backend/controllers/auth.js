@@ -8,12 +8,14 @@ import {
     sendResetPasswordRequest,
 } from "../utils/emailServices.js";
 import { encryptEmail } from "../utils/cryptDecryptEmail.js";
+import { trim } from "../utils/trim.js";
+
 
 // Register user
-export const registerUser = async (req, res) => {
+export const register = async (req, res) => {
     const { name, surname, email, password, tel_number } = req.body;
 
-    const emailCrypt = encryptEmail(email, process.env.key, process.env.iv);
+    const emailCrypt = encryptEmail(trim(email), process.env.key, process.env.iv);
 
     const salt = bcrypt.genSaltSync(10);
     const pwHashed = await bcrypt.hash(password, salt);
@@ -21,14 +23,15 @@ export const registerUser = async (req, res) => {
     let errorMessage = ""
 
     const query = `INSERT INTO users(name, surname, email, password, tel_number, role)
-                VALUES('${name}', '${surname}', '${emailCrypt}', '${pwHashed}', '${tel_number}', 'user')`;
+                VALUES('${trim(name)}', '${trim(surname)}', '${emailCrypt}', '${pwHashed}', '${trim(tel_number)}', 'user')`;
+
 
     connection.query(query, (error, result) => {
         if (error) {
             if (error.code === "ER_DUP_ENTRY") {
-                if(error.sqlMessage.includes("email")){
+                if (error.sqlMessage.includes("email")) {
                     errorMessage += "Email already registered"
-                }else if(error.sqlMessage.includes("tel_number")){
+                } else if (error.sqlMessage.includes("tel_number")) {
                     errorMessage += "Telephone number already present"
                 }
                 return res.status(409).json({
@@ -48,7 +51,7 @@ export const registerUser = async (req, res) => {
         try {
             // Genera token univoco
             const tokenConfirmation = uuidv4();
-            sendEmailRegister(email, name, tokenConfirmation);
+            sendEmailRegister(trim(email), trim(name), tokenConfirmation);
 
             const queryToken = `UPDATE users SET token = '${tokenConfirmation}' WHERE id_user = ${result.insertId}`;
 
@@ -77,7 +80,7 @@ export const registerUser = async (req, res) => {
 // Login user
 export const loginUser = (req, res) => {
     const { email, password } = req.body;
-    const emailCrypt = encryptEmail(email, process.env.key, process.env.iv);
+    const emailCrypt = encryptEmail(trim(email), process.env.key, process.env.iv);
 
     const query = `SELECT * FROM users WHERE email="${emailCrypt}"`;
 
@@ -109,10 +112,6 @@ export const loginUser = (req, res) => {
                         expiresIn: "7d", // 7 giorni
                     }
                 );
-
-                const expiresInMilliseconds = 7 * 24 * 60 * 60 * 1000;
-                // const expiresInMilliseconds = 1000; // 1 secondo
-
                 return res
                     .status(200)
                     .json({
@@ -192,7 +191,7 @@ export const resetPasswordRequest = (req, res) => {
         specialChars: false,
     });
 
-    const emailCrypt = encryptEmail(email, process.env.key, process.env.iv);
+    const emailCrypt = encryptEmail(trim(email), process.env.key, process.env.iv);
     const query = `UPDATE users SET otp = '${otp}' WHERE email='${emailCrypt}' `;
 
     connection.query(query, (error, result) => {
@@ -233,7 +232,7 @@ export const resetPasswordRequest = (req, res) => {
 
 export const resetPassword = (req, res) => {
     const { otp, password } = req.body;
-    
+
     const query = `SELECT email FROM users WHERE BINARY otp='${otp}' `;
 
     connection.query(query, async (error, result) => {
@@ -259,7 +258,7 @@ export const resetPassword = (req, res) => {
 
             const updatePwQuery = `UPDATE users SET password = '${pwHashed}', otp=NULL WHERE email = '${result[0].email}' `;
 
-            connection.query(updatePwQuery, (error, result2)=>{
+            connection.query(updatePwQuery, (error, result2) => {
                 if (error) {
                     return res.status(400).json({
                         message: error.message,

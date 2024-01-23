@@ -20,7 +20,7 @@ router.get("/profile", authenticateToken, getUserById);
 router.patch("/modify", authenticateToken, modiifyUser);
 
 // Modify a user's role only if the role is admin or owner
-router.patch("/modify/role", authenticateToken, checkUserRole, modifyRoleUser) 
+router.patch("/modify/role", authenticateToken, checkUserRole, modifyRoleUser)
 
 // Delete personal profile
 router.delete("/delete", authenticateToken, deleteUser);

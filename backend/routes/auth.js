@@ -2,7 +2,7 @@ import express from "express";
 import {
     confirmAccount,
     loginUser,
-    registerUser,
+    register,
     resetPassword,
     resetPasswordRequest,
 } from "../controllers/auth.js";
@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get("/confirm/:tokenConfirmation", confirmAccount);
 
-router.post("/signup", registerUser);
+router.post("/signup", register);
 
 router.post("/login", loginUser);
 
