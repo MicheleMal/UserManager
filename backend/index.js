@@ -1,5 +1,5 @@
-//TODO Aggiungere aggiornare readme.md
-//TODO Scrivere il file api-documentation.md
+//? Aggiornare readme.md
+//? Sistemare messaggi di risposta nel file api-documentation.md
 
 import epxress from "express"
 import cors from "cors"

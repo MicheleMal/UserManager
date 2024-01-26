@@ -15,7 +15,7 @@ export const getAllUsers = (req, res) => {
     connection.query(query, (error, result) => {
         if (error)
             return res
-                .status(400)
+                .status(500)
                 .json({ message: error.message, data: [], check: false });
 
         try {
@@ -44,7 +44,7 @@ export const getUserById = (req, res) => {
     connection.query(query, (error, result) => {
         if (error)
             return res
-                .status(400)
+                .status(500)
                 .json({ message: error.message, data: [], check: false });
 
         try {
@@ -73,7 +73,7 @@ export const modiifyUser = (req, res) => {
     connection.query(getEmailQuery, async (error, result) => {
         if (error) {
             return res
-                .status(400)
+                .status(500)
                 .json({ message: error.message, data: [], check: false });
         }
 
@@ -97,7 +97,7 @@ export const modiifyUser = (req, res) => {
         connection.query(updateQuery, data, (error, result) => {
             if (error)
                 return res
-                    .status(400)
+                    .status(500)
                     .json({ message: error.message, data: [], check: false });
 
             try {
@@ -125,7 +125,7 @@ export const modifyRoleUser = (req, res) => {
     connection.query(query, (error, result) => {
         if (error)
             return res
-                .status(400)
+                .status(500)
                 .json({ message: error.message, data: [], check: false });
 
         try {
@@ -152,7 +152,7 @@ export const deleteUser = (req, res) => {
     connection.query(query, (error, result) => {
         if (error)
             return res
-                .status(400)
+                .status(500)
                 .json({ message: error.message, data: [], check: false });
 
         try {

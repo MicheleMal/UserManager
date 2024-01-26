@@ -41,7 +41,7 @@ export const register = async (req, res) => {
                 });
             }
 
-            return res.status(400).json({
+            return res.status(500).json({
                 message: error.message,
                 data: [],
                 check: false,
@@ -87,7 +87,7 @@ export const loginUser = (req, res) => {
     connection.query(query, async (error, result) => {
         if (error)
             return res
-                .status(400)
+                .status(500)
                 .json({ message: error.message, data: [], check: false });
 
         if (result.length == 0) {
@@ -172,7 +172,7 @@ export const confirmAccount = (req, res) => {
                 check: true,
             });
         } catch (error) {
-            return res.status(500).json({
+            return res.status(400).json({
                 message: error.message,
                 data: [],
                 check: false,
@@ -196,7 +196,7 @@ export const resetPasswordRequest = (req, res) => {
 
     connection.query(query, (error, result) => {
         if (error) {
-            return res.status(400).json({
+            return res.status(500).json({
                 message: error.message,
                 data: [],
                 check: false,
@@ -237,7 +237,7 @@ export const resetPassword = (req, res) => {
 
     connection.query(query, async (error, result) => {
         if (error) {
-            return res.status(400).json({
+            return res.status(500).json({
                 message: error.message,
                 data: [],
                 check: false,
@@ -260,7 +260,7 @@ export const resetPassword = (req, res) => {
 
             connection.query(updatePwQuery, (error, result2) => {
                 if (error) {
-                    return res.status(400).json({
+                    return res.status(500).json({
                         message: error.message,
                         data: [],
                         check: false,
@@ -282,7 +282,7 @@ export const resetPassword = (req, res) => {
                 }
             })
         } catch (error) {
-            return res.status(500).json({
+            return res.status(400).json({
                 message: error.message,
                 data: [],
                 check: false,

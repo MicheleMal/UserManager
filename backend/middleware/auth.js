@@ -4,7 +4,7 @@ export const checkUserRole = (req, res, next) => {
     if (req.user.role === "owner" || req.user.role === "admin") {
         next();
     } else {
-        return res.status(403).json({
+        return res.status(401).json({
             message: "UNAUTHORIZED ACCESS",
             data: [],
             check: false,
