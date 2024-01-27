@@ -1,59 +1,53 @@
 # User Manager
 
-User Manager is an application for user management, created using Node.js and MySQL. The application provides a set of APIs for user registration, login, and account management. It utilizes JWT Token for authentication and password encryption during registration.
+User Manager è un'applicazione per la gestione degli utenti, creata utilizzando Node.js e MySQL per la parte backend, React+VITE per la parte frontend. L'applicazione fornisce un insieme di API per la registrazione degli utenti, il login, la gestione dell'account e funzionalità specifiche per chi ha il ruolo "owner" o "admin". Utilizza il token JWT per l'autenticazione e la crittografia delle password durante la registrazione.
 
 ***
 
 ## Features:
 
-* Register a new user
-* Login to get JWT token
-* Access information of logged in user
-* Modify the account information of the logged in user
-* Delete the account of the logged in user
+* Registrare un nuovo utente
+* Effettuare il login per ottenere il token JWT
+* Accedere alle informazioni dell'utente autenticato
+* Modificare le informazioni dell'account dell'utente autenticato
+* Eliminare l'account dell'utente autenticato
+* Cambiare ruolo di un utente specifico, solo se il ruolo dell'utente autenticato è "owner" o "admin"
 
 ## Technologies Used:
 * Node.js
 * MySQL
 * JWT (JSON Web Token)
-* Bcrypt (for password encryption)
-* crypto (for email encryption)
+* Bcrypt (per la crittografia delle password)
+* crypto (per la crittografia dell'email)
 
 ## Installation
 
-Clone the repository to a local directory: __git clone <repository_url>__
-
+Clonare il repository in una directory locale: git clone <repository_url>
 
 ### Frontend
-1. Navigate to the `frontend` directory: `cd frontend`
+1. Navigare nella directory frontend: cd frontend
 
-2. Install frontend dependencies using npm: `npm install`
+2. Installare le dipendenze del frontend utilizzando npm: npm install
 
-3. Start the frontend: `npm start`
-   * The Vite+React application will be accessible at: `http://localhost:5173`
+3. Avviare il frontend: `npm start`
+   * L'applicazione Vite+React sarà accessibile all'indirizzo: `http://localhost:5173`
 
 ### Backend
-1. Clone the repository to a local directory: `git clone <repository_url>`
+1. Installare le dipendenze utilizzando npm: `npm install`
 
-2. Install dependencies using npm: `npm install`
+2. Configurare il database MySQL:
+   * Configurare il database MySQL: `backend/db/schema.sql`
+   * Modificare le informazioni di connessione al database nel file `.env`
 
-3. Configure the MySQL database:
-   * Create a new MySQL database using the `backend/db/schema.sql` file
-   * Modify the database connection information in the `.env` file
-
-4. Run the backend server: `npm start`
-   * The APIs will be accessible at: `http://localhost:5000`
+3. Eseguire il server backend: `npm start`
+   * Le API saranno accessibili all'indirizzo `http://localhost:5000`
 
 ***
 
-## Future Features
+## Contributi
 
-1. More...
+I contributi sono benvenuti per migliorare ed espandere le funzionalità di User Manager. Se desideri contribuire, apri una pull request con le tue modifiche.
 
-## Contributions
+## Contributi
 
-Contributions are welcome to improve and expand the features of User Manager. If you'd like to contribute, please open a pull request with your changes.
-
-## License
-
-This project is licensed under the terms of the MIT license. Please see the LICENSE file for more information.
+I contributi sono benvenuti per migliorare ed espandere le funzionalità di User Manager. Se desideri contribuire, apri una pull request con le tue modifiche.

@@ -1,6 +1,3 @@
-//? Aggiornare readme.md
-//? Sistemare messaggi di risposta nel file api-documentation.md
-
 import epxress from "express"
 import cors from "cors"
 import "dotenv/config"
