@@ -8,14 +8,12 @@ import {
     sendResetPasswordRequest,
 } from "../utils/emailServices.js";
 import { encryptEmail } from "../utils/cryptDecryptEmail.js";
-import { trim } from "../utils/trim.js";
-
 
 // Register user
 export const register = async (req, res) => {
     const { name, surname, email, password, tel_number } = req.body;
 
-    const emailCrypt = encryptEmail(trim(email), process.env.key, process.env.iv);
+    const emailCrypt = encryptEmail(email.trim(), process.env.key, process.env.iv);
 
     const salt = bcrypt.genSaltSync(10);
     const pwHashed = await bcrypt.hash(password, salt);
@@ -23,7 +21,7 @@ export const register = async (req, res) => {
     let errorMessage = ""
 
     const query = `INSERT INTO users(name, surname, email, password, tel_number, role)
-                VALUES('${trim(name)}', '${trim(surname)}', '${emailCrypt}', '${pwHashed}', '${trim(tel_number)}', 'user')`;
+                VALUES('${name.trim()}', '${surname.trim()}', '${emailCrypt}', '${pwHashed}', '${tel_number.trim()}', 'user')`;
 
 
     connection.query(query, (error, result) => {
@@ -51,7 +49,7 @@ export const register = async (req, res) => {
         try {
             // Genera token univoco
             const tokenConfirmation = uuidv4();
-            sendEmailRegister(trim(email), trim(name), tokenConfirmation);
+            sendEmailRegister(email.trim(), name.trim(), tokenConfirmation);
 
             const queryToken = `UPDATE users SET token = '${tokenConfirmation}' WHERE id_user = ${result.insertId}`;
 
@@ -80,7 +78,8 @@ export const register = async (req, res) => {
 // Login user
 export const loginUser = (req, res) => {
     const { email, password } = req.body;
-    const emailCrypt = encryptEmail(trim(email), process.env.key, process.env.iv);
+    
+    const emailCrypt = encryptEmail(email.trim(), process.env.key, process.env.iv);
 
     const query = `SELECT * FROM users WHERE email="${emailCrypt}"`;
 
@@ -191,7 +190,7 @@ export const resetPasswordRequest = (req, res) => {
         specialChars: false,
     });
 
-    const emailCrypt = encryptEmail(trim(email), process.env.key, process.env.iv);
+    const emailCrypt = encryptEmail(email.trim(), process.env.key, process.env.iv);
     const query = `UPDATE users SET otp = '${otp}' WHERE email='${emailCrypt}' `;
 
     connection.query(query, (error, result) => {

@@ -5,7 +5,6 @@ import {
     sendChangeAccountEmail,
     sendChangeRoleEmail,
 } from "../utils/emailServices.js";
-import { trim } from "../utils/trim.js";
 
 // Gets all registered users
 export const getAllUsers = (req, res) => {
@@ -129,7 +128,7 @@ export const modifyRoleUser = (req, res) => {
                 .json({ message: error.message, data: [], check: false });
 
         try {
-            sendChangeRoleEmail(trim(email), role);
+            sendChangeRoleEmail(email.trim(), role);
             return res.status(200).json({
                 message: "User role changed successfully",
                 data: result,
